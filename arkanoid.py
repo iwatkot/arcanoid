@@ -1,8 +1,8 @@
 import pygame
 
+
 class Arkanoid:
     def __init__(self, ag):
-        #pygame.init()
         self.screen = ag.screen
         self.screen_rect = ag.screen_rect
         self.settings = ag.settings

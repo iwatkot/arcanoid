@@ -2,8 +2,6 @@ import sys
 
 import pygame
 
-from pygame.sprite import Sprite
-
 from time import sleep
 
 from settings import Settings
@@ -11,6 +9,7 @@ from arkanoid import Arkanoid
 from ball import Ball
 from brick import Brick
 from game_stats import GameStats
+
 
 class ArkanoidGame:
     def __init__(self):
@@ -62,16 +61,19 @@ class ArkanoidGame:
 
     def _update_bricks(self):
         if pygame.sprite.spritecollideany(self.ball, self.bricks):
-            hitted_brick = pygame.sprite.spritecollideany(self.ball, self.bricks)
+            hitted_brick = pygame.sprite.spritecollideany(self.ball,
+                                                          self.bricks)
             self._change_ball_direction(hitted_brick)
             self.bricks.remove(hitted_brick)
 
     def _change_ball_direction(self, hitted_brick):
-        if (self.ball.rect.top - 2 < hitted_brick.rect.bottom < self.ball.rect.top + 2 or
-            self.ball.rect.bottom - 2 < hitted_brick.rect.top < self.ball.rect.bottom + 2):
+        if (self.ball.rect.top - 2 < hitted_brick.rect.bottom <
+            self.ball.rect.top + 2 or self.ball.rect.bottom - 2 <
+                hitted_brick.rect.top < self.ball.rect.bottom + 2):
             self.ball.y_direction *= -1
-        elif (self.ball.rect.right - 2 < hitted_brick.rect.left < self.ball.rect.right + 2 or
-            self.ball.rect.left - 2 < hitted_brick.rect.right < self.ball.rect.left + 2):
+        elif (self.ball.rect.right - 2 < hitted_brick.rect.left <
+              self.ball.rect.right + 2 or self.ball.rect.left - 2 <
+                hitted_brick.rect.right < self.ball.rect.left + 2):
             self.ball.x_direction *= -1
 
     def _check_ball_screen_edges(self):
@@ -80,8 +82,9 @@ class ArkanoidGame:
             self.ball.x_direction *= -1
         if self.ball.rect.top <= self.screen_rect.top:
             self.ball.y_direction *= -1
-        if (self.arkanoid.rect.top - 2 < self.ball.rect.bottom < self.arkanoid.rect.top + 2 and 
-                (self.arkanoid.rect.left < self.ball.rect.right and 
+        if (self.arkanoid.rect.top - 2 < self.ball.rect.bottom <
+            self.arkanoid.rect.top + 2 and
+                (self.arkanoid.rect.left < self.ball.rect.right and
                     self.arkanoid.rect.right > self.ball.rect.left)):
             self.ball.y_direction *= -1
 
@@ -89,7 +92,7 @@ class ArkanoidGame:
         self.ball.update()
         if self.ball.rect.bottom >= self.screen_rect.bottom:
             self._ball_out()
-    
+
     def _ball_out(self):
         if self.stats.lives_left > 0:
             sleep(1)
@@ -101,16 +104,17 @@ class ArkanoidGame:
             self.ball.center_me(self)
         else:
             self.stats.game_active = False
-    
+
     def _create_wall(self):
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
-        number_of_bricks = (self.screen_rect.width - 2 * brick_width) // (2 * brick_width)
+        number_of_bricks = (self.screen_rect.width -
+                            2 * brick_width) // (2 * brick_width)
         number_of_rows = (self.screen_rect.height // 2) // (2 * brick_height)
         for row_number in range(number_of_rows):
             for brick_number in range(number_of_bricks):
                 self._create_brick(row_number, brick_number)
-    
+
     def _create_brick(self, row_number, brick_number):
         brick = Brick(self)
         brick_width, brick_height = brick.rect.size
@@ -125,6 +129,7 @@ class ArkanoidGame:
         self.ball.blitme()
         self.bricks.draw(self.screen)
         pygame.display.flip()
+
 
 if __name__ == "__main__":
     ag = ArkanoidGame()

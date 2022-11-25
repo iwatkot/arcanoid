@@ -1,5 +1,6 @@
 import pygame
 
+
 class Ball:
     def __init__(self, ag):
         pygame.init()
@@ -18,7 +19,7 @@ class Ball:
 
     def launch(self):
         self.moving = True
-        
+
     def update(self):
         if self.moving:
             self.x += self.settings.ball_speed * self.x_direction

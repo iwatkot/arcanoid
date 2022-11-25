@@ -2,6 +2,7 @@ import pygame
 
 from pygame.sprite import Sprite
 
+
 class Brick(Sprite):
     def __init__(self, ag):
         super().__init__()
